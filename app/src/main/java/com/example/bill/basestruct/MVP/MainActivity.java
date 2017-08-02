@@ -34,7 +34,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     tv_token = (TextView) findViewById(R.id.token);
     progressBar = (ProgressBar) findViewById(R.id.progress);
     //https://www.diycode.cc/
-    mPresenter.getToken("navie", "amaze_910");
+    mPresenter.getToken("diycode name", "diycode pass");
   }
 
   @Override
