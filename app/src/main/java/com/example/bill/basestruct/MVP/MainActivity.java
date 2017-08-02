@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.alibaba.android.arouter.launcher.ARouter;
@@ -33,7 +34,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
     tv_token = (TextView) findViewById(R.id.token);
     progressBar = (ProgressBar) findViewById(R.id.progress);
     //https://www.diycode.cc/
-    mPresenter.getToken("diycode username", "diycode password");
+    mPresenter.getToken("navie", "amaze_910");
   }
 
   @Override
@@ -49,7 +50,7 @@ public class MainActivity extends BaseActivity<MainPresenter> implements MainCon
 
   @Override
   public void showMessage(String message) {
-
+    Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
   }
 
   @Override

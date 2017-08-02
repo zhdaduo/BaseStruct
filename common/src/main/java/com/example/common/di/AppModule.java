@@ -1,13 +1,19 @@
 package com.example.common.di;
 
 import android.content.Context;
+import com.example.common.util.LiveNetworkMonitor;
+import com.example.common.util.NetworkMonitor;
+import com.example.common.util.NoNetworkException;
 import dagger.Module;
 import dagger.Provides;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.inject.Singleton;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
 import me.jessyan.rxerrorhandler.handler.listener.ResponseErroListener;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,10 +47,28 @@ public class AppModule {
 
   @Singleton
   @Provides
-  OkHttpClient provideOkHttpClient() {
+  NetworkMonitor provideNetworkMonitor() {
+    return new LiveNetworkMonitor(application);
+  }
+
+  @Singleton
+  @Provides
+  OkHttpClient provideOkHttpClient(final NetworkMonitor networkMonitor) {
     return new OkHttpClient.Builder()
         .connectTimeout(20, TimeUnit.SECONDS)
         .readTimeout(20, TimeUnit.SECONDS)
+        .addInterceptor(new Interceptor() {
+                          @Override
+                          public Response intercept(Chain chain) throws IOException {
+                            boolean connected = networkMonitor.isConnected();
+                            if (connected) {
+                              return chain.proceed(chain.request());
+                            } else {
+                              throw new NoNetworkException();
+                            }
+                          }
+                        }
+        )
         .build();
   }
 

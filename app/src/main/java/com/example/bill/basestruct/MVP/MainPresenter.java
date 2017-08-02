@@ -6,6 +6,7 @@ import com.example.bill.basestruct.MVP.MainContract.View;
 import com.example.bill.basestruct.model.bean.Token;
 import com.example.common.base.BasePresenter;
 import com.example.common.di.ActivityScope;
+import com.example.common.util.NoNetworkException;
 import com.example.common.util.RxUtil;
 import javax.inject.Inject;
 import me.jessyan.rxerrorhandler.core.RxErrorHandler;
@@ -36,6 +37,9 @@ public class MainPresenter extends BasePresenter<Model, View> {
           @Override
           public void onError(@NonNull Throwable e) {
             super.onError(e);
+            if (e instanceof NoNetworkException) {
+              view.showMessage("No Network Connection");
+            }
             view.hideLoading();
           }
 
