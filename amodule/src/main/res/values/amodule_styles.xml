@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <style name="AmoduleAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/amodule_colorPrimary</item>
+    <item name="colorPrimaryDark">@color/amodule_colorPrimaryDark</item>
+    <item name="colorAccent">@color/amodule_colorAccent</item>
+    <!-- 设置activity切换动画 -->
+
+  </style>
+</resources>
