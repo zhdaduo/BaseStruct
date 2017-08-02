@@ -2,5 +2,6 @@ include ':app', ':common', ':amodule'
 // tell gradle there is a module called 'lib', found in a specific directory
 // Note the /app on the end, the project structure wraps a project around a module
 // , you want to refer that module!
+// new File(../BaseStruct/common)
 project (':common').projectDir = new File(settingsDir,'/common')
 project (':amodule').projectDir = new File(settingsDir, '/amodule')
