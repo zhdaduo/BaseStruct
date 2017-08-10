@@ -1,6 +1,7 @@
 package com.example.common.base;
 
 import android.os.Bundle;
+import android.support.annotation.CallSuper;
 import android.support.annotation.Nullable;
 import android.view.View;
 import butterknife.ButterKnife;
@@ -33,6 +34,27 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
     if (view != null) {
       unbinder = ButterKnife.bind(this, view);
     }
+    mPresenter.onStart(savedInstanceState);
+  }
+
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    mPresenter.onResume();
+  }
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    mPresenter.onPause();
+  }
+
+  @CallSuper
+  @Override
+  public void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
+    mPresenter.onSaveInstanceState(outState);
   }
 
   @Override
