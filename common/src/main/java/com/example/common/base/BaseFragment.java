@@ -37,9 +37,9 @@ public abstract class BaseFragment<P extends IPresenter> extends RxFragment {
 
   @Override
   public void onDestroyView() {
-    super.onDestroyView();
     if(unbinder != null){
       unbinder.unbind();
     }
+    super.onDestroyView();
   }
 }
