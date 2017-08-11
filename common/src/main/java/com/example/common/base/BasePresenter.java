@@ -10,20 +10,12 @@ import org.greenrobot.eventbus.EventBus;
 
 public abstract class BasePresenter<M extends IModel, V extends IView> implements IPresenter {
 
-  protected M mModel;
-  protected V mView;
+  protected final M mModel;
+  protected final V mView;
 
-  public BasePresenter(M mModel, V mView) {
+  public BasePresenter(M mModel, V rootView) {
     this.mModel = mModel;
-    this.mView = mView;
-  }
-
-  public BasePresenter(V rootView) {
     this.mView = rootView;
-  }
-
-  public BasePresenter() {
-
   }
 
   @Override
@@ -56,8 +48,6 @@ public abstract class BasePresenter<M extends IModel, V extends IView> implement
     if (mModel != null) {
       mModel.onDestroy();
     }
-    this.mModel = null;
-    this.mView = null;
   }
 
   protected boolean useEventBus() {

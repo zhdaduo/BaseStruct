@@ -18,34 +18,31 @@ import me.jessyan.rxerrorhandler.handler.ErrorHandleSubscriber;
 @ActivityScope
 public class MainPresenter extends BasePresenter<Model, View> {
 
-  private MainContract.Model model;
-  private MainContract.View view;
   private RxErrorHandler mErrorHandler;
 
   @Inject
   public MainPresenter(MainContract.Model model, MainContract.View view, RxErrorHandler handler) {
-    this.model = model;
-    this.view = view;
+    super(model, view);
     this.mErrorHandler = handler;
   }
 
   public void getToken(String username, String password) {
-    model.getToken(username, password)
-        .compose(RxUtil.applySchedulers(view))
-        .compose(RxUtil.bindToLifecycle(view))
+    mModel.getToken(username, password)
+        .compose(RxUtil.applySchedulers(mView))
+        .compose(RxUtil.bindToLifecycle(mView))
         .subscribe(new ErrorHandleSubscriber<Token>(mErrorHandler) {
           @Override
           public void onError(@NonNull Throwable e) {
             super.onError(e);
             if (e instanceof NoNetworkException) {
-              view.showMessage("No Network Connection");
+              mView.showMessage("No Network Connection");
             }
-            view.hideLoading();
+            mView.hideLoading();
           }
 
           @Override
           public void onNext(@NonNull Token token) {
-            view.showToken(token);
+            mView.showToken(token);
           }
         });
   }
@@ -53,7 +50,6 @@ public class MainPresenter extends BasePresenter<Model, View> {
   @Override
   public void onDestroy() {
     super.onDestroy();
-    view = null;
     mErrorHandler = null;
   }
 }
